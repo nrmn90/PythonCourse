@@ -1,5 +1,5 @@
 import random
-
+import sys
 
 class Portfolio:
 
@@ -16,12 +16,14 @@ class Portfolio:
         print('Your stock portfolio is:', self.portfolio_stock)
         print('Your mutual fund portfolio is:', self.portfolio_mutualfund)
 
-    def add_cash(self, amount):
+    def add_cash(self):
+        amount = int(input('How many cash you want to add?'))
         self.portfolio_cash += amount
         print('You have', self.portfolio_cash, 'cash')
         self.hist.append(('Added cash', amount))
 
-    def withdraw_cash(self, amount):
+    def withdraw_cash(self):
+        amount = int(input('How many cash you want to withdraw?'))
         self.portfolio_cash -= amount
         print('You have', self.portfolio_cash, 'cash')
         self.hist.append(('Withdrawn', amount))
@@ -92,4 +94,59 @@ class Portfolio:
 
     def history(self):
         for i, h in enumerate(self.hist):
-            print(i+1, '-', h)
+            print(i + 1, '-', h)
+
+
+p = Portfolio()
+
+
+def menu():
+    while True:
+        print('''Please, select from available options:
+                  1. Add or withdraw cash 
+                  2. Insert stock list for portfolio
+                  3. Buy or sell stock(s) from created list
+                  4. Insert mutual fund list for portfolio
+                  5. Buy or sell mutual fund(s) from created list
+                  6. Exit and show history of transactions''')
+        menu_option = int(input())
+        if menu_option == 1:
+            print('Press 1. to add cash and 2. to withdraw cash')
+            sub_menu = int(input())
+            if sub_menu == 1:
+                p.add_cash()
+            elif sub_menu == 2:
+                p.withdraw_cash()
+            print()
+            menu()
+        elif menu_option == 2:
+            p.add_stock()
+            print()
+            menu()
+        elif menu_option == 3:
+            print('Type 1 to buy and 2 to sell stock(s)')
+            sub_menu = int(input())
+            if sub_menu == 1:
+                p.buy_stock()
+            elif sub_menu == 2:
+                p.sell_stock()
+            print()
+            menu()
+        elif menu_option == 4:
+            p.add_mutualfund()
+            print()
+            menu()
+        elif menu_option == 5:
+            print('Type 1 to buy and 2 to sell mutual fund(s)')
+            sub_menu = int(input())
+            if sub_menu == 1:
+                p.buy_mutualfund()
+            elif sub_menu == 2:
+                p.sell_mutualfund()
+            print()
+            menu()
+        elif menu_option == 6:
+            print('Here are your transactions below')
+            p.history()
+            sys.exit()
+menu()
